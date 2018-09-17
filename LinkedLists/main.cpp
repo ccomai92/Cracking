@@ -3,23 +3,17 @@
 using namespace std; 
 
 int main() {
-    LinkedList list; 
-    list.append(3); 
-    list.append(4);
-    list.append(2); 
-    list.append(2);
-    list.append(2); 
-    list.append(2);
-    list.append(2); 
-    list.append(2);
-    list.append(4); 
-    list.append(5); 
-    list.append(4); 
+    LinkedList list1; 
+    list1.append(7); 
+    list1.append(1);
+    list1.append(6);
 
-    list.dump(); 
+    LinkedList list2;
+    list2.append(5); 
+    list2.append(9);
+    list2.append(2);
 
-    // list.removeDups2();
-    cout << "Third From Last: " << list.kthToLast(3)->data << endl; 
- 
+    list1.sumLists(list2).dump(); 
+    
     return 0; 
 }

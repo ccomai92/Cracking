@@ -30,6 +30,12 @@ bool LinkedList::append(int data) {
     return true;
 }
 
+bool LinkedList::push_front(int data) {
+    Node *temp = this->head;
+    this->head = new Node{data, temp}; 
+    return true;
+}
+
 bool LinkedList::remove(int data) {
     if (this->head == nullptr) {
         std::cerr << "List is empty" << std::endl; 
@@ -138,15 +144,43 @@ Node* LinkedList::kthToLast(int k) {
             return nullptr; 
         }
         current1 = current1->next;
+
     }
 
     while (current1 != nullptr) {
         current1 = current1->next;
+
         current2 = current2->next;
+
     }
     
 
     return current2; 
+}
+
+// partition a linked list around a value x 
+// such that all nodes less than x comes before
+// all nodes greater than or equal to x
+// The partition element x can appear anywhere 
+// in the "right partition" 
+bool LinkedList::partition(int input) {
+
+}
+
+
+LinkedList LinkedList::sumLists2(LinkedList rhs) {
+    LinkedList result; 
+
+}
+
+LinkedList LinkedList::sumLists2(LinkedList rhs) {
+    LinkedList result; 
+
+}
+
+bool LinkedList::isPalindrome() {
+
+    return true;
 }
 
 void LinkedList::dump() {
@@ -156,4 +190,19 @@ void LinkedList::dump() {
         temp = temp->next;
     }
     std::cout << std::endl; 
+}
+
+Node* LinkedList::search(int data) {
+    if (this->head == nullptr) {
+        return nullptr;
+    }
+    Node *current = this->head;
+
+    while (current != nullptr) {
+        if (current->data == data) {
+            return current;
+        }
+        current = current->next;
+    }
+    return nullptr;
 }
