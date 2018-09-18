@@ -164,18 +164,135 @@ Node* LinkedList::kthToLast(int k) {
 // The partition element x can appear anywhere 
 // in the "right partition" 
 bool LinkedList::partition(int input) {
+    Node *result = this->search(input);
+    if (result == nullptr) {
+        std::cerr << "No such element" << std::endl;
+        return false;
+    }
 
+    Node *smallHead = nullptr;
+    Node *smallEnd = nullptr;
+    Node *bigHead = nullptr;
+    Node *bigEnd = nullptr; 
+     
+
+    while (this->head != nullptr) {
+        Node *current = this->head;
+        Node *next = this->head->next;
+        if (current->data < input) {
+            if (smallHead == nullptr) {
+                smallHead = current;
+                smallEnd = current;
+                smallEnd->next = nullptr; 
+            } else {
+                Node *clipper = smallHead; 
+                smallHead = current; 
+                smallHead->next = clipper; 
+            }
+        } else {
+            if (bigHead == nullptr) {
+                bigHead = current;
+                bigEnd = current;
+                bigEnd->next = nullptr; 
+            } else {
+                Node *clipper = bigHead;
+                bigHead = current;
+                bigHead->next = clipper; 
+            }
+        }
+        this->head = next;
+    }
+    this->head = smallHead; 
+    if (smallHead == nullptr) {
+        this->head = bigHead; 
+    } else {
+        smallEnd->next = bigHead;
+    }
+     
+    return true;
 }
 
+// You are given two non-empty linked lists 
+// representing two non-negative integers.
+// The digits are stored in reverse order and
+// each of their nodes contain a single digit. 
+// Add the two numbers and return it as a linked list.
+LinkedList LinkedList::sumLists1(LinkedList rhs) {
+    LinkedList result; 
+    int sum = this->head->data + rhs.head->data; 
+    int remainder = sum % 10; 
+    int quotient = sum / 10; 
+    result.push_front(remainder); 
+
+    Node *first = this->head->next; 
+    Node *second = rhs.head->next; 
+
+    while (first != nullptr && second != nullptr) {
+        sum = first->data + second->data + quotient;
+        quotient = sum / 10; 
+        remainder = sum % 10; 
+        result.push_front(remainder); 
+        first = first->next;
+        second = second->next; 
+    }
+
+    while (first != nullptr) {
+        sum = first->data + quotient; 
+        quotient = sum / 10; 
+        remainder = sum % 10; 
+        result.push_front(remainder);
+        first = first->next; 
+    }
+
+    while (second != nullptr) {
+        sum = second->data + quotient; 
+        quotient = sum / 10;
+        remainder = sum % 10; 
+        result.push_front(remainder);
+        second = second->next;
+    }
+
+    if (quotient != 0) {
+        result.push_front(quotient); 
+    }
+    return result;
+}
 
 LinkedList LinkedList::sumLists2(LinkedList rhs) {
     LinkedList result; 
+    Node *first = this->head;
+    Node *second = rhs.head;
+    int quotient = sumListsHelper(first, second, result); 
+    if (quotient != 0) {
+        result.push_front(quotient);
+    }
+
+    return result;
 
 }
 
-LinkedList LinkedList::sumLists2(LinkedList rhs) {
-    LinkedList result; 
-
+int LinkedList::sumListsHelper(Node *first, Node *second, LinkedList &result) {
+    if (first == nullptr && second == nullptr) {
+        return 0;
+    } else if (first == nullptr) {
+        int quotient = sumListsHelper(nullptr, second->next, result); 
+        int sum = second->data + quotient; 
+        int remainder = sum % 10;
+        result.push_front(remainder);
+        return sum / 10;
+    } else if (second == nullptr) {
+        int quotient = sumListsHelper(first->next, nullptr, result);
+        int sum = first->data + quotient;
+        int remainder = sum % 10;
+        result.push_front(remainder);
+        return sum / 10;
+    } else {
+        int quotient = sumListsHelper(first->next, second->next, result);
+        int sum = first->data + second->data + quotient;
+        int remainder = sum % 10;
+        result.push_front(remainder);
+        return sum / 10;
+    }
 }
 
 bool LinkedList::isPalindrome() {

@@ -22,7 +22,7 @@ public:
     bool removeDups2();  
     Node* kthToLast(int k); 
     bool partition(int input); 
-    LinkedList sumLists(LinkedList rhs); 
+    LinkedList sumLists1(LinkedList rhs); 
     LinkedList sumLists2(LinkedList rhs); 
     bool isPalindrome(); 
 
@@ -33,6 +33,7 @@ private:
     int count;  
 
     Node* search(int data); 
+    int sumListsHelper(Node *first, Node *second, LinkedList &result);
 };
 
 #endif
