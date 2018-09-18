@@ -4,6 +4,7 @@
 #include <iostream> 
 #include <map>
 #include <set>
+#include <stack>
 
 struct Node {
     int data; 

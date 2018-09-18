@@ -295,8 +295,35 @@ int LinkedList::sumListsHelper(Node *first, Node *second, LinkedList &result) {
     }
 }
 
+// maybe using stack or recursion. 
 bool LinkedList::isPalindrome() {
+    if (this->head == nullptr) {
+        return false;
+    }
+    std::stack<int> s; 
+    Node *slow = this->head;
+    Node *fast = this->head;
 
+    while (fast != nullptr && fast->next != nullptr) {
+        
+        s.push(slow->data);
+        fast = fast->next;
+        fast = fast->next;
+        slow = slow->next;
+    }
+
+    if (fast != nullptr) {
+        slow = slow->next;
+    }
+
+    while (slow != nullptr) {
+        int value = s.top();
+        if (slow->data != value) {
+            return false;
+        } 
+        s.pop();
+        slow = slow->next;
+    }
     return true;
 }
 
